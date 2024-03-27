@@ -1,0 +1,13 @@
+<DModal class="new-reviewable-post-modal"
+ @title={{@model.title}}
+ @closeModal={{@closeModal}}>
+  <:body>
+    {{@model.text}}
+  </:body>
+  <:footer>
+    <DButton class="btn-primary"
+             @translatedLabel="Ok"
+             @action={{@closeModal}}
+    />
+  </:footer>
+</DModal>
