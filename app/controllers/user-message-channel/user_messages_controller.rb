@@ -5,22 +5,12 @@ module UserMessageChannel
     requires_plugin UserMessageChannel::PLUGIN_NAME
 
     def send_message_bus_message
-
-      user_message_data = {
-        :type => params[:type],
-        :title => nil,
-        :text => nil,
-      }
-
-      if params.has_key?(:title)
-        user_message_data[:title] = params[:title].to_json
-      end
-      if params.has_key?(:text)
-        user_message_data[:text] = params[:text].to_json
-      end
-
       begin
-        MessageBus.publish("/user-messages/#{params[:user_id].to_i}", user_message_data)
+        MessageBus.publish("/user-messages/#{params[:user_id].to_i}", {
+          type: params[:type],
+          title: params[:title],
+          text: params[:text],
+        })
       rescue Exception => e
         render json: { success: false, message: e.message }
       end
